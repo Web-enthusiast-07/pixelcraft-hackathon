@@ -26,55 +26,57 @@ export function HotbarNav({ activeSection }: HotbarNavProps) {
     <motion.nav
       initial={{ y: 100 }}
       animate={{ y: 0 }}
-      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50"
+      className="fixed bottom-4 left-0 right-0 z-50 flex justify-center"
     >
-      <div className="flex gap-1 p-2 bg-card/95 backdrop-blur-sm pixel-border">
-        {navItems.map((item, index) => {
-          const Icon = item.icon;
-          const isActive = activeSection === item.id;
-          
-          return (
-            <motion.button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className={cn(
-                'hotbar-slot transition-all duration-200',
-                isActive && 'hotbar-slot-active'
-              )}
-              title={item.label}
-            >
-              <Icon 
+      <div className="flex flex-col items-center">
+        <div className="flex gap-1 p-2 bg-card/95 backdrop-blur-sm pixel-border">
+          {navItems.map((item, index) => {
+            const Icon = item.icon;
+            const isActive = activeSection === item.id;
+            
+            return (
+              <motion.button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
                 className={cn(
-                  'w-6 h-6 transition-colors',
-                  isActive ? item.color : 'text-muted-foreground'
-                )} 
-              />
-              {isActive && (
-                <motion.div
-                  layoutId="hotbar-indicator"
-                  className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-primary"
+                  'hotbar-slot transition-all duration-200',
+                  isActive && 'hotbar-slot-active'
+                )}
+                title={item.label}
+              >
+                <Icon 
+                  className={cn(
+                    'w-6 h-6 transition-colors',
+                    isActive ? item.color : 'text-muted-foreground'
+                  )} 
                 />
-              )}
-            </motion.button>
-          );
-        })}
-      </div>
-      
-      {/* Slot numbers */}
-      <div className="flex justify-around mt-1 px-2">
-        {navItems.map((_, index) => (
-          <span 
-            key={index} 
-            className="text-xs font-pixel text-muted-foreground"
-          >
-            {index + 1}
-          </span>
-        ))}
+                {isActive && (
+                  <motion.div
+                    layoutId="hotbar-indicator"
+                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-primary"
+                  />
+                )}
+              </motion.button>
+            );
+          })}
+        </div>
+        
+        {/* Slot numbers */}
+        <div className="flex justify-around w-full mt-1 px-2">
+          {navItems.map((_, index) => (
+            <span 
+              key={index} 
+              className="text-xs font-pixel text-muted-foreground w-12 text-center"
+            >
+              {index + 1}
+            </span>
+          ))}
+        </div>
       </div>
     </motion.nav>
   );
